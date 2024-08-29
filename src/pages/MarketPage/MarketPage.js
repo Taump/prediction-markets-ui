@@ -249,10 +249,6 @@ export const MarketPage = () => {
     return () => clearInterval(intervalId);
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   if (params.event_date - quiet_period > now) {
     tradeStatus = t("common.status.trading", 'trading').toUpperCase();
     tradeStatusColor = appConfig.YES_COLOR;
@@ -373,12 +369,12 @@ export const MarketPage = () => {
       <link rel="canonical" href={`${window.location.protocol + '//' + window.location.host}/${currentLang !== 'en' ? currentLang + '/' : ''}market/${seoText}-${address}`} />
     </Helmet>
     <div style={{ marginTop: 50 }}>
-      <h1 className={styles.event}>{event}</h1>
+      <h1 className={styles.event}>{event}{teams?.yes?.name ? " prediction" : null}</h1>
       {(teams.yes === null || teams.no === null) ? null : <div style={{ margin: '30px 0', width: '100%' }}>
         <Row>
           <Col md={{ span: 8 }} xs={{ span: 8 }} style={{ textAlign: 'center' }}>
             <div className={styles.emblemWrap}>
-              <Img src={yes_crest_url} className={styles.emblem} unloader={<img className={styles.emblem} src="/plug.svg" />} />
+              <Img src={yes_crest_url} alt={teams.yes.name} className={styles.emblem} unloader={<img className={styles.emblem} alt={teams.yes.name} src="/plug.svg" />} />
             </div>
             <div style={{ paddingTop: 10, lineHeight: 1 }}>
               <span style={{ color: appConfig.YES_COLOR }}>{teams.yes.name}</span>
@@ -395,7 +391,7 @@ export const MarketPage = () => {
 
           <Col md={{ span: 8 }} xs={{ span: 8 }} style={{ textAlign: 'center' }}>
             <div className={styles.emblemWrap}>
-              <Img src={no_crest_url} className={styles.emblem} unloader={<img className={styles.emblem} src="/plug.svg" />}/>
+              <Img src={no_crest_url} alt={teams.no.name} className={styles.emblem} unloader={<img className={styles.emblem} alt={teams.yes.name} src="/plug.svg" />} />
             </div>
             <div style={{ paddingTop: 10, lineHeight: 1 }}>
               <span style={{ color: appConfig.NO_COLOR }}>{teams.no.name}</span>
@@ -519,11 +515,11 @@ export const MarketPage = () => {
           <Col md={{ span: showMarketSizePie ? 12 : 24 }} xs={{ span: 24 }}>
             <h2 style={{ fontSize: 28 }}>{t('pages.market.apy.title', "Make money from liquidity provision")}</h2>
             <Typography.Paragraph>
-              {reserve !== 0 && <span>{t('pages.market.apy.every_trade', "Every trade is charged a fee which is added to the market’s pool (see the fee accumulation chart above).")} </span>}
+              {reserve !== 0 && <span>{t('pages.market.apy.every_trade', "Every trade is charged a fee which is added to this prediction market’s pool (see the fee accumulation chart above).")} </span>}
               {t('pages.market.apy.earn', "Earn a share of these fees by buying all tokens in the same proportions they are already issued. One of the tokens will win, and you’ll get a share of the trading fees collected after you invested.")}
             </Typography.Paragraph>
             <Typography.Paragraph>
-              {t('pages.market.apy.by_buying', "By buying all tokens without changing their proportions you are not betting on any outcome but taking a market-neutral position instead and adding liquidity to the market. This is safe if the current proportions reflect the true probabilities.")}
+              {t('pages.market.apy.by_buying', "By buying all tokens without changing their proportions you are not betting on any outcome but taking a market-neutral position instead and adding liquidity to this prediction market. This is safe if the current proportions reflect the true probabilities.")}
             </Typography.Paragraph>
 
             <div className={styles.apyWrap}>
